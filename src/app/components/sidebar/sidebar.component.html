@@ -1,0 +1,94 @@
+<div class="w-64 bg-white text-gray-800 flex flex-col min-h-screen shadow-sm">
+  <!-- Logo / Title -->
+  <div class="p-5 text-xl font-bold flex items-center space-x-2">
+    <i class="pi pi-bars text-lg text-sky-600"></i>
+    <span>Milktea</span>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="flex-1 px-3">
+    <ul>
+      <li class="mb-2">
+        <a
+          routerLink="/dashboard"
+          class="flex items-center px-4 py-3 rounded-lg transition"
+          [routerLinkActive]="'bg-sky-50 text-sky-600'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="pi pi-home mr-3"></i>
+          แดชบอร์ด
+        </a>
+      </li>
+      <li class="mb-2">
+        <a
+          routerLink="/employees"
+          class="flex items-center px-4 py-3 rounded-lg transition hover:bg-sky-50 hover:text-sky-600"
+          [routerLinkActive]="'bg-sky-50 text-sky-600'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="pi pi-users mr-3"></i>
+          จัดการพนักงาน
+        </a>
+      </li>
+      <li class="mb-2">
+        <a
+          routerLink="/menus"
+          class="flex items-center px-4 py-3 rounded-lg transition hover:bg-sky-50 hover:text-sky-600"
+          [routerLinkActive]="'bg-sky-50 text-sky-600'"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="pi pi-list mr-3"></i>
+          จัดการเมนู
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Profile Section -->
+  <div class="relative p-4 cursor-pointer" (click)="toggleDropdown()">
+    <div class="flex items-center space-x-3">
+      <img
+        class="h-10 w-10 rounded-full border-2 border-white"
+        src="https://randomuser.me/api/portraits/men/1.jpg"
+        alt="User Profile"
+      />
+      <div>
+        <p class="text-sm font-medium">Apex Enjoyer</p>
+        <p class="text-xs text-gray-500">Admin</p>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div
+      *ngIf="dropdownOpen"
+      class="absolute bottom-16 left-4 w-44 bg-white rounded-xl shadow-lg py-2"
+    >
+      <ul>
+        <li class="flex items-center py-2 px-4 text-gray-700 hover:bg-gray-200 rounded-t-xl transition">
+          <i class="pi pi-user mr-2"></i> Profile
+        </li>
+        <li
+          class="flex items-center py-2 px-4 text-red-600 hover:bg-red-100 rounded-b-xl transition"
+          (click)="openLogoutModal()"
+        >
+          <i class="pi pi-sign-out mr-2"></i> Logout
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Logout Modal -->
+<div *ngIf="isLogoutModalOpen" class="fixed inset-0 bg-gray-500 bg-opacity-10 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+    <div class="flex items-center space-x-3">
+      <i class="pi pi-exclamation-triangle text-red-500 text-2xl"></i>
+      <h2 class="text-lg font-semibold">ออกจากระบบ</h2>
+    </div>
+    <p class="text-gray-600 mt-2">คุณแน่ใจหรือไม่ว่าต้องการออกจากระบบ?</p>
+    <div class="flex justify-end mt-4 space-x-2">
+      <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" (click)="closeLogoutModal()">ยกเลิก</button>
+      <button class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" (click)="confirmLogout()">ออกจากระบบ</button>
+    </div>
+  </div>
+</div>

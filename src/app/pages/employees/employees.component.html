@@ -1,0 +1,138 @@
+<div class="min-h-screen flex">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col items-center bg-gray-100 p-10">
+
+    <!-- Title -->
+    <div class="mt-10 mb-6 self-start w-full">
+      <h1 class="text-4xl font-bold text-gray-800 text-left">รายชื่อพนักงาน</h1>
+    </div>
+
+    <!-- Tools Bar -->
+    <div class="bg-white p-4 rounded-lg shadow-lg w-full flex justify-between items-center">
+      
+      <!-- Search Bar -->
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="onSearch()" 
+        class="p-2 border border-gray-300 rounded-lg w-1/4 focus:outline-none focus:ring focus:border-blue-500"
+        placeholder="ค้นหาพนักงาน..."
+      />
+
+      <!-- Add Button -->
+      <button class="px-4 py-2 bg-sky-600 text-white rounded-lg shadow-md hover:bg-sky-700 transition"
+              (click)="openAddEmployeeModal()">
+        <i class="pi pi-plus"></i> เพิ่มพนักงาน
+      </button>
+
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white m-4 p-4 rounded-lg shadow-lg w-full overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead class="text-sm">
+          <tr>
+            <th class="p-3 text-left">รหัสพนักงาน</th>
+            <th class="p-3 text-left">ชื่อพนักงาน</th>
+            <th class="p-3 text-left">อีเมล</th>
+            <th class="p-3 text-left">เบอร์โทร</th>
+            <th class="p-3 text-left">ตำแหน่ง</th>
+            <th class="p-3 text-right">การจัดการ</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 text-gray-900">
+          <tr *ngFor="let employee of filteredEmployees" class="hover:bg-gray-50">
+            <td class="p-3 font-medium">{{ employee.id }}</td>
+            <td class="p-3">{{ employee.name }}</td>
+            <td class="p-3">{{ employee.email }}</td>
+            <td class="p-3">{{ employee.phone }}</td>
+            <td class="p-3">{{ employee.position }}</td>
+            <td class="p-3 text-right">
+              <button class="px-2 py-1 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+                      (click)="openEditModal(employee)">
+                <i class="pi pi-pencil"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+// Add Employee Modal
+<div *ngIf="isAddModalOpen" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-gray-800">เพิ่มพนักงานใหม่</h2>
+      <button class="text-gray-600 hover:text-gray-900" (click)="closeAddEmployeeModal()">
+        <i class="pi pi-times text-xl"></i>
+      </button>
+    </div>
+
+    <div class="mt-4">
+      <label class="block text-sm font-medium text-gray-700">ชื่อพนักงาน</label>
+      <input type="text" [(ngModel)]="newEmployee.name" class="w-full p-2 border rounded-lg focus:ring focus:border-blue-500">
+    </div>
+
+    <div class="mt-2">
+      <label class="block text-sm font-medium text-gray-700">อีเมล</label>
+      <input type="email" [(ngModel)]="newEmployee.email" class="w-full p-2 border rounded-lg focus:ring focus:border-blue-500">
+    </div>
+
+    <div class="mt-2">
+      <label class="block text-sm font-medium text-gray-700">เบอร์โทร</label>
+      <input type="text" [(ngModel)]="newEmployee.phone" class="w-full p-2 border rounded-lg focus:ring focus:border-blue-500">
+    </div>
+
+    <div class="mt-2">
+      <label class="block text-sm font-medium text-gray-700">ตำแหน่ง</label>
+      <input type="text" [(ngModel)]="newEmployee.position" class="w-full p-2 border rounded-lg focus:ring focus:border-blue-500">
+    </div>
+
+    <div class="flex justify-end mt-4 space-x-2">
+      <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" (click)="closeAddEmployeeModal()">ยกเลิก</button>
+      <button class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+        <i class="pi pi-check mr-2"></i> เพิ่ม
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Employee Info Modal -->
+<div *ngIf="isEditModalOpen && selectedEmployee" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-6 w-96">
+    <h2 class="text-lg font-semibold text-gray-800">ข้อมูลพนักงาน</h2>
+    
+    <div class="mt-4">
+      <label class="block text-sm font-medium text-gray-700">ชื่อพนักงาน</label>
+      <input type="text" [(ngModel)]="selectedEmployee!.name" class="w-full p-2 border rounded-lg bg-gray-100" readonly>
+    </div>
+
+    <div class="mt-2">
+      <label class="block text-sm font-medium text-gray-700">อีเมล</label>
+      <input type="email" [(ngModel)]="selectedEmployee!.email" class="w-full p-2 border rounded-lg bg-gray-100" readonly>
+    </div>
+
+    <div class="mt-2">
+      <label class="block text-sm font-medium text-gray-700">เบอร์โทร</label>
+      <input type="text" [(ngModel)]="selectedEmployee!.phone" class="w-full p-2 border rounded-lg bg-gray-100" readonly>
+    </div>
+
+    <div class="mt-2">
+      <label class="block text-sm font-medium text-gray-700">ตำแหน่ง</label>
+      <input type="text" [(ngModel)]="selectedEmployee!.position" class="w-full p-2 border rounded-lg bg-gray-100" readonly>
+    </div>
+
+    <div class="flex justify-end mt-4 space-x-2">
+      <button class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition" (click)="closeEditModal()">ปิด</button>
+      <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">บันทึก</button>
+    </div>
+  </div>
+</div>
+

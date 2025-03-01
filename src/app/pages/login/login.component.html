@@ -1,0 +1,33 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-500">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Login</h2>
+    <form (ngSubmit)="login()">
+      <div class="mb-4">
+        <label for="username" class="block text-gray-700 font-semibold">Username</label>
+        <input 
+        type="text" 
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" 
+        [(ngModel)]="user.username" 
+        name="username" 
+        placeholder="Enter your username"
+        required>
+      </div>
+      <div class="mb-6">
+        <label for="password" class="block text-gray-700 font-semibold">Password</label>
+        <input 
+        type="password" 
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" 
+        [(ngModel)]="user.password" 
+        name="password" 
+        placeholder="Enter your password"
+        required>
+      </div>
+      <button
+       type="submit" 
+       class="w-full bg-sky-500 text-white py-2 rounded-lg hover:bg-sky-600 transition duration-300"
+       
+       
+       >Login</button>
+    </form>
+  </div>
+</div>
